@@ -55,7 +55,9 @@ export default {
 				const providedAuthorization = request.headers.get('Authorization');
 				if (providedAuthorization) {
 					const providedWrapperKey = providedAuthorization.split(' ').pop();
-					if (providedWrapperKey == dummyWrapperKey) {
+
+					const dummyWrapperKeys = dummyWrapperKey.split(',');
+					if (dummyWrapperKeys.includes(providedWrapperKey || '')) {
 						if (realOpenAIKey) {
 							if (realOpenAIKey != dummyWrapperKey) {
 								if (requestURL.pathname.startsWith('/v1')) {
@@ -82,7 +84,7 @@ export default {
 										{
 											headers: responseHeader,
 											status: 400,
-										}
+										},
 									);
 								}
 							} else {
@@ -99,7 +101,7 @@ export default {
 									{
 										headers: responseHeader,
 										status: 500,
-									}
+									},
 								);
 							}
 						} else {
@@ -115,7 +117,7 @@ export default {
 								{
 									headers: responseHeader,
 									status: 500,
-								}
+								},
 							);
 						}
 					} else {
@@ -132,7 +134,7 @@ export default {
 							{
 								headers: responseHeader,
 								status: 400,
-							}
+							},
 						);
 					}
 				} else {
@@ -148,7 +150,7 @@ export default {
 						{
 							headers: responseHeader,
 							status: 401,
-						}
+						},
 					);
 				}
 			} else {
@@ -165,7 +167,7 @@ export default {
 					{
 						headers: responseHeader,
 						status: 400,
-					}
+					},
 				);
 			}
 		} else {
@@ -182,7 +184,7 @@ export default {
 				{
 					headers: responseHeader,
 					status: 400,
-				}
+				},
 			);
 		}
 	},
